@@ -38,12 +38,13 @@ module Makara
       cookie = DEFAULT_OPTIONS.merge(options)
       now = Time.now
 
-      cookie[:max_age] = if context_data.any?
+      mage = if context_data.any?
         (context_data.values.max - now.to_f).ceil + MAX_AGE_BUFFER
       else
         0
       end
-      cookie[:expires] = now + cookie[:max_age]
+      cookie[:max_age] = mage.to_s
+      cookie[:expires] = now + mage
       cookie[:value] = context_data.collect { |proxy_id, ttl| "#{proxy_id}:#{ttl}" }.join('|')
 
       cookie

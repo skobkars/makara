@@ -46,7 +46,7 @@ module Makara
 
         method_names.each do |method_name|
           define_method method_name do |*args, &block|
-            control&.send(method_name, *args, &block)
+            control.send(method_name, *args, &block) if !control.nil?
           end
         end
       end
